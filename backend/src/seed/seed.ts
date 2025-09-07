@@ -1,6 +1,6 @@
 import { query } from '../db.js';
 import argon2 from 'argon2';
-import { faker } from '@faker-js/faker/locale/en';
+import { faker } from '@faker-js/faker';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -178,7 +178,7 @@ const seedDatabase = async () => {
           RETURNING id, title, category, starts_at, price_cents
         `, [
           title,
-          description,
+          faker.lorem.paragraphs({ min: 2, max: 3 }),
           category,
           startsAt,
           endsAt,
