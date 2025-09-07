@@ -17,10 +17,10 @@ export const createDonationSchema = z.object({
 export class SponsorshipController {
   static async createDonation(req: Request, res: Response): Promise<void> {
     try {
-      const result = await SponsorshipService.createDonation({
-        ...req.body,
-        user_id: req.user!.id
-      });
+      const result = await SponsorshipService.createDonation(
+        req.user!.id,
+        req.body
+      );
       res.status(201).json({
         message: 'Sponsorship initiated successfully',
         ...result
@@ -78,7 +78,7 @@ export class SponsorshipController {
       const result = await SponsorshipService.getEventSponsorshipDetails(
         req.params.eventId,
         req.user!.id,
-        req.user!.role,
+        'USER',
         {
           start_date: req.query.start_date,
           end_date: req.query.end_date
@@ -123,7 +123,7 @@ export class SponsorshipController {
       const result = await SponsorshipService.sendThankYouMessages(
         req.params.eventId,
         req.user!.id,
-        req.user!.role,
+        'USER',
         message,
         subject
       );
